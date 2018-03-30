@@ -257,7 +257,8 @@ if "HEROKU" in list(os.environ.keys()):
         except:
             bot.set_webhook(url='https://evt-bot.herokuapp.com/')
         return "?", 200
-        server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+
+    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 80)))
 else:
     # если переменной окружения HEROKU нету, значит это запуск с машины разработчика.
     # Удаляем вебхук на всякий случай, и запускаем с обычным поллингом.
