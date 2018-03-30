@@ -15,29 +15,29 @@ filmRates = config.vote_films
 knownUsers = []
 
 
-@bot.message_handler(commands=['start'])
-def start(message):
-    bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
-
-
-@bot.message_handler(func=lambda message: True, content_types=['text'])
-def echo_message(message):
-    bot.reply_to(message, message.text)
-
-# # Хэндлер обрабатывающий команды "/start и "/ask_bot""
-# @bot.message_handler(commands=['start', 'ask_bot'])
-# def send_welcome(message):
-#     known_users = functions.read_known_users()
-#     current_user = functions.take_user(message)
+# @bot.message_handler(commands=['start'])
+# def start(message):
+#     bot.reply_to(message, 'Hello, ' + message.from_user.first_name)
 #
-#     if current_user not in known_users:
-#         functions.write_new_user(current_user)
-#         bot.send_message(message.chat.id, "Привет, я бот клоповника \n Рекомендуем ознакомиться в нашими правилами /about",
-#                          reply_markup=keyboard_generator(menus.main_menu, True, True, 1))
-#     else:
-#         print('Есть в базе')
-#         bot.send_message(message.chat.id, "Мы уже знакомы ;-)",
-#                      reply_markup=keyboard_generator(menus.main_menu, True, True, 1))
+#
+# @bot.message_handler(func=lambda message: True, content_types=['text'])
+# def echo_message(message):
+#     bot.reply_to(message, message.text)
+
+# Хэндлер обрабатывающий команды "/start и "/ask_bot""
+@bot.message_handler(commands=['start', 'ask_bot'])
+def send_welcome(message):
+    known_users = functions.read_known_users()
+    current_user = functions.take_user(message)
+
+    if current_user not in known_users:
+        functions.write_new_user(current_user)
+        bot.send_message(message.chat.id, "Привет, я бот клоповника \n Рекомендуем ознакомиться в нашими правилами /about",
+                         reply_markup=keyboard_generator(menus.main_menu, True, True, 1))
+    else:
+        print('Есть в базе')
+        bot.send_message(message.chat.id, "Мы уже знакомы ;-)",
+                     reply_markup=keyboard_generator(menus.main_menu, True, True, 1))
 
 
 # Хэндлер показывающий список доступных комманд

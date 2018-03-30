@@ -19,10 +19,11 @@
       <file leaf-file-name="Klop_bot_1.1.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Klop_bot_1.1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="263">
-              <caret line="246" column="0" lean-forward="false" selection-start-line="246" selection-start-column="0" selection-end-line="246" selection-end-column="0" />
+            <state relative-caret-position="193">
+              <caret line="39" column="18" lean-forward="true" selection-start-line="26" selection-start-column="4" selection-end-line="39" selection-end-column="18" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
+                <marker date="1522400843411" expanded="true" signature="265:546" ph="..." />
               </folding>
             </state>
           </provider>
@@ -250,6 +251,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+            <marker date="1522400843411" expanded="true" signature="265:546" ph="..." />
           </folding>
         </state>
       </provider>
@@ -320,10 +322,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Klop_bot_1.1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="246" column="0" lean-forward="false" selection-start-line="246" selection-start-column="0" selection-end-line="246" selection-end-column="0" />
+        <state relative-caret-position="193">
+          <caret line="39" column="18" lean-forward="true" selection-start-line="26" selection-start-column="4" selection-end-line="39" selection-end-column="18" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+            <marker date="1522400843411" expanded="true" signature="265:546" ph="..." />
           </folding>
         </state>
       </provider>
