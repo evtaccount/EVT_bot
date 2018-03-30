@@ -246,44 +246,44 @@ def choose_film(c):
     #     bot.send_message(c.from_user.id, str(key) + '. ' + film['film'] + ' - ' + str(film['vote_film']))
 
 
-@server.route('/' + config.API_TOKEN_EVT, methods=['POST'])
-def getMessage():
-    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-    return "!", 200
+# @server.route('/' + config.API_TOKEN_EVT, methods=['POST'])
+# def getMessage():
+#     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+#     return "!", 200
 
 
-@server.route("/")
-def webhook():
-    bot.remove_webhook()
-    bot.set_webhook(url='https://evt-bot.herokuapp.com/' + config.API_TOKEN_EVT)
-    return "!", 200
-
-if __name__ == "__main__":
-    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 80)))
-
-# # Проверим, есть ли переменная окружения Хероку (как ее добавить смотрите ниже)
-# if "HEROKU" in list(os.environ.keys()):
-#     logger = telebot.logger
-#     telebot.logger.setLevel(logging.INFO)
-#
-#
-#     @server.route("/" + config.API_TOKEN_EVT, methods=['POST'])
-#     def getMessage():
-#         bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-#         return "!", 200
-#
-#     @server.route("/")
-#     def webhook():
-#         bot.remove_webhook()
-#         try:
-#             bot.set_webhook(url='https://evt-bot.herokuapp.com/' + config.API_TOKEN_EVT)
-#         except:
-#             bot.set_webhook(url='https://evt-bot.herokuapp.com/')
-#         return "?", 200
-#
-#     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 80)))
-# else:
-#     # если переменной окружения HEROKU нету, значит это запуск с машины разработчика.
-#     # Удаляем вебхук на всякий случай, и запускаем с обычным поллингом.
+# @server.route("/")
+# def webhook():
 #     bot.remove_webhook()
-#     bot.polling(none_stop=True)
+#     bot.set_webhook(url='https://evt-bot.herokuapp.com/' + config.API_TOKEN_EVT)
+#     return "!", 200
+
+# if __name__ == "__main__":
+#     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 80)))
+
+# Проверим, есть ли переменная окружения Хероку (как ее добавить смотрите ниже)
+if "HEROKU" in list(os.environ.keys()):
+    logger = telebot.logger
+    telebot.logger.setLevel(logging.INFO)
+
+
+    @server.route('/' + config.API_TOKEN_EVT, methods=['POST'])
+    def getMessage():
+        bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+        return "!", 200
+
+
+    @server.route("/")
+    def webhook():
+        bot.remove_webhook()
+        bot.set_webhook(url='https://evt-bot.herokuapp.com/' + config.API_TOKEN_EVT)
+        return "!", 200
+
+
+    if __name__ == "__main__":
+        server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 80)))
+else:
+    # если переменной окружения HEROKU нету, значит это запуск с машины разработчика.
+    # Удаляем вебхук на всякий случай, и запускаем с обычным поллингом.
+    bot.remove_webhook()
+    bot.polling(none_stop=True)
