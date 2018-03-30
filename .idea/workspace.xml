@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="91bb8bbb-76dd-4929-8ddd-78d37895fe55" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Klop_bot_1.1.py" afterPath="$PROJECT_DIR$/Klop_bot_1.1.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Klop_bot_1.1.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Klop_bot_1.1.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Klop_bot_1.1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="221" column="33" lean-forward="true" selection-start-line="221" selection-start-column="33" selection-end-line="221" selection-end-column="33" />
+            <state relative-caret-position="402">
+              <caret line="257" column="65" lean-forward="true" selection-start-line="257" selection-start-column="65" selection-end-line="257" selection-end-column="65" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -38,7 +38,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
@@ -86,8 +86,8 @@
         <option value="$PROJECT_DIR$/Procfile" />
         <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/runtime.txt" />
-        <option value="$PROJECT_DIR$/Klop_bot_1.1.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/Klop_bot_1.1.py" />
       </list>
     </option>
   </component>
@@ -302,16 +302,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Klop_bot_1.1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="221" column="33" lean-forward="true" selection-start-line="221" selection-start-column="33" selection-end-line="221" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/runtime.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -325,6 +315,16 @@
         <state relative-caret-position="135">
           <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Klop_bot_1.1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="257" column="65" lean-forward="true" selection-start-line="257" selection-start-column="65" selection-end-line="257" selection-end-column="65" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

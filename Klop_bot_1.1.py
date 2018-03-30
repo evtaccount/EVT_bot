@@ -243,14 +243,19 @@ if "HEROKU" in list(os.environ.keys()):
     telebot.logger.setLevel(logging.INFO)
 
     server = Flask(__name__)
-    @server.route("/bot", methods=['POST'])
+
+    @server.route("/" + config.API_TOKEN_EVT, methods=['POST'])
     def getMessage():
         bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
         return "!", 200
+
     @server.route("/")
     def webhook():
         bot.remove_webhook()
-        bot.set_webhook(url="https://min-gallows.herokuapp.com/bot") # этот url нужно заменить на url вашего Хероку приложения
+        try:
+            bot.set_webhook(url='https://evt-bot.herokuapp.com/' + config.API_TOKEN_EVT)
+        except:
+            bot.set_webhook(url='https://evt-bot.herokuapp.com/')
         return "?", 200
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
 else:
