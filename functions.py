@@ -1,5 +1,8 @@
 import sys
 import config
+import redis
+
+redis_db = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 def read_known_users():
     known_users = []

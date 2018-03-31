@@ -7,6 +7,7 @@ import config
 import os
 from flask import Flask, request
 import logging
+import redis
 
 
 bot = telebot.TeleBot(config.API_TOKEN_EVT)
