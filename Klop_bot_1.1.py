@@ -14,6 +14,7 @@ bot = telebot.TeleBot(config.API_TOKEN_EVT)
 server = Flask(__name__)
 filmRates = config.vote_films
 knownUsers = []
+redis_db = redis.StrictRedis(host='localhost', decode_responses=True, port=6379, db=0)
 
 
 # @bot.message_handler(commands=['start'])
@@ -28,17 +29,13 @@ knownUsers = []
 # Хэндлер обрабатывающий команды "/start и "/ask_bot""
 @bot.message_handler(commands=['start', 'ask_bot'])
 def send_welcome(message):
-    known_users = functions.read_known_users()
-    current_user = functions.take_user(message)
-
-    if current_user not in known_users:
-        functions.write_new_user(current_user)
-        bot.send_message(message.chat.id, "Привет, я бот клоповника \n Рекомендуем ознакомиться в нашими правилами /about",
+    if functions.save_new_user(message.from_user):
+        bot.send_message(message.chat.id,
+                         "Привет, я бот клоповника \n Рекомендуем ознакомиться в нашими правилами /about",
                          reply_markup=keyboard_generator(menus.main_menu, True, True, 1))
     else:
-        print('Есть в базе')
         bot.send_message(message.chat.id, "Мы уже знакомы ;-)",
-                     reply_markup=keyboard_generator(menus.main_menu, True, True, 1))
+                         reply_markup=keyboard_generator(menus.main_menu, True, True, 1))
 
 
 # Хэндлер показывающий список доступных комманд
@@ -87,12 +84,13 @@ def markup_ivents(message):
 # "История"
 @bot.message_handler(func=lambda message: True if message.text in menus.cinema['buttons'][:-1:] else False)
 def markup_cinema(message):
-    filmRates = functions.read_film_rates_with_id(1)
+    filmRates = functions.get_film_rates()
 
     if message.text == 'Предложить фильм':
         pass
 
     elif message.text == 'Голосование':
+        print(message)
         bot.send_message(message.chat.id, "Ваш выбор?", reply_markup=choose_film_markup(filmRates))
 
     elif message.text == 'История':
@@ -175,72 +173,29 @@ def main_menu(message):
 # --------------------------------------------- Кронец блока меню ------------------------------------------------------
 
 
-def choose_film_markup(button=config.vote_films):
+def choose_film_markup(button):
 
     markup_choose_film = types.InlineKeyboardMarkup(row_width=1)
-    btn_in_film1 = types.InlineKeyboardButton(text=(button[0]['film_name'] + ' - ' + str(button[0]['rate'])),
-                                              callback_data='film1')
-    btn_in_film2 = types.InlineKeyboardButton(text=(button[1]['film_name'] + ' - ' + str(button[1]['rate'])),
-                                              callback_data='film2')
-    btn_in_film3 = types.InlineKeyboardButton(text=(button[2]['film_name'] + ' - ' + str(button[2]['rate'])),
-                                              callback_data='film3')
+    btn_in_film1 = types.InlineKeyboardButton(text=(button[0]['film1'] + ' - ' + str(button[0]['rate'])), callback_data='film1')
+    btn_in_film2 = types.InlineKeyboardButton(text=(button[1]['film2'] + ' - ' + str(button[1]['rate'])), callback_data='film2')
+    btn_in_film3 = types.InlineKeyboardButton(text=(button[2]['film3'] + ' - ' + str(button[2]['rate'])), callback_data='film3')
     markup_choose_film.add(btn_in_film1, btn_in_film2, btn_in_film3)
 
     return markup_choose_film
 
 
 # Обработчик меню голосования за кино
-@bot.callback_query_handler(func=lambda c: c.data)
-def choose_film(c):
-    film_rates = functions.read_film_rates_with_id(1)
-    print(film_rates)
-    print(c)
+@bot.callback_query_handler(func=lambda call: True)
+def choose_film(call):
+    if call.data == 'film1' or call.data == 'film2' or call.data == 'film3':
+        film_rates = functions.save_film_rates(call.from_user.id, call.data)
 
-    if c.data == 'film1':
-    # if c.data == 'film1' and c.from_user.id not in film_rates[1]['user_ids'] and c.from_user.id in film_rates[2]['user_ids']:
-        if c.from_user.id not in film_rates[1]['user_ids'] and c.from_user.id not in film_rates[2]['user_ids']:
-            if c.from_user.id in film_rates[0]['user_ids']:
-                film_rates[0]['user_ids'].remove(c.from_user.id)
-                film_rates[0]['rate'] -= 1
-                print(film_rates)
-            else:
-                film_rates[0]['user_ids'].append(c.from_user.id)
-                film_rates[0]['rate'] += 1
-                print(film_rates)
-
-    elif c.data == 'film2':
-    # elif c.data == 'film2' and c.from_user.id not in film_rates[0]['user_ids'] and c.from_user.id in film_rates[2]['user_ids']:
-        if c.from_user.id not in film_rates[0]['user_ids'] and c.from_user.id not in film_rates[2]['user_ids']:
-            if c.from_user.id in film_rates[1]['user_ids']:
-                film_rates[1]['user_ids'].remove(c.from_user.id)
-                film_rates[1]['rate'] -= 1
-                print(film_rates)
-            else:
-                film_rates[1]['user_ids'].append(c.from_user.id)
-                film_rates[1]['rate'] += 1
-                print(film_rates)
-
-    elif c.data == 'film3':
-    # elif c.data == 'film3' and c.from_user.id not in film_rates[0]['user_ids'] and c.from_user.id in film_rates[1]['user_ids']:
-        if c.from_user.id not in film_rates[1]['user_ids'] and c.from_user.id not in film_rates[0]['user_ids']:
-            if c.from_user.id in film_rates[2]['user_ids']:
-                film_rates[2]['user_ids'].remove(c.from_user.id)
-                film_rates[2]['rate'] -= 1
-                print(film_rates)
-            else:
-                film_rates[2]['user_ids'].append(c.from_user.id)
-                film_rates[2]['rate'] += 1
-                print(film_rates)
-
-    functions.write_film_rates_with_id(film_rates)
-
-    try:
-        bot.edit_message_text(chat_id=c.message.chat.id,
+    call.data = ''
+    bot.edit_message_text(chat_id=call.message.chat.id,
                           text='Ваш выбор?',
-                          message_id=c.message.message_id,
+                          message_id=call.message.message_id,
                           reply_markup=choose_film_markup(film_rates))
-    except:
-        pass
+
     # bot.send_message(c.from_user.id, 'Результаты голосования:', reply_markup=menus.markup_crate)
     # for key, film in enumerate(film_rates):
     #     key += 1
